@@ -1,5 +1,4 @@
 import { initializeApp } from "firebase/app";
-import './App.css';
 import { NativeBaseProvider } from "native-base";
 
 import {
@@ -10,6 +9,7 @@ import {
 } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import { Loading } from "./components";
+import { getAuth } from "firebase/auth";
 
 const Login = lazy(() => import("./pages/authentication/login"));
 const RecoveryPassword = lazy(() => import("./pages/authentication/recovery-password"));
@@ -29,22 +29,24 @@ const firebaseConfig = {
 
 const App = () => {
   const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
 
   return (
     <NativeBaseProvider>
       <Router>
         <Suspense fallback={<Loading />}>
           <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/recovery-password" element={<RecoveryPassword />} />
-            <Route path="/product" element={<ProductList />} />
+            <Route path="/" element={<Dashboard app={app} auth={auth}/>} />
+            <Route path="/dashboard" element={<Dashboard app={app} auth={auth}/>} />
+            <Route path="/login" element={<Login app={app} auth={auth}/>} />
+            <Route path="/recovery-password" element={<RecoveryPassword app={app} auth={auth}/>} />
+            <Route path="/product" element={<ProductList app={app} auth={auth}/>} />
             {/* TODO: Modificar para form */}
-            <Route path="/product/:id" element={<ProductList />} />
-            <Route path="/user" element={<UserList />} />
+            <Route path="/product/:id" element={<ProductList app={app} auth={auth}/>} />
+            <Route path="/user" element={<UserList app={app} auth={auth}/>} />
             {/* TODO: Modificar para form */}
-            <Route path="/user/:id" element={<UserList />} />
-            <Route path="/stock" element={<StockList />} />
+            <Route path="/user/:id" element={<UserList app={app} auth={auth}/>} />
+            <Route path="/stock" element={<StockList app={app} auth={auth}/>} />
           </Routes>
         </Suspense>
       </Router>

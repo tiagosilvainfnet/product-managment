@@ -3,7 +3,7 @@ import Grid from '@mui/material/Grid';
 const DefaultGrid = (props) => {
     return (
         <Grid {...props}>
-        {props.children}
+            {props.children}
         </Grid>
     );
 }

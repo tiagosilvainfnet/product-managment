@@ -1,2 +1,6 @@
-export { default as Button } from './button';
-export { default as Loading } from './loading';
+export { default as Button } from './Button';
+export { default as Loading } from './Loading';
+export { default as Grid } from './Grid';
+export { default as Textfield } from './Textfield';
+export { default as Checkbox } from './Checkbox';
+export { default as Avatar } from './Avatar';
