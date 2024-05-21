@@ -1,23 +1,36 @@
-import { Button, Avatar, Checkbox, Grid, Textfield } from "../../components";
+import { Button, Avatar, Checkbox, Grid, Textfield, Alert } from "../../components";
 import Logo from "../../assets/img/logo.svg";
 import BackgroundLogin from "../../assets/img/wallpaper-login.jpg";
 import { useEffect, useState } from "react";
 import { loginFirebase, verifyLogin } from "../../utils/auth";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [alert, setAlert] = useState({message: '', type: ''});
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
     const login = async () => {
+        setIsLoading(true);
         try{
             const response = await loginFirebase(props.auth, email, password);
-            window.localStorage.setItem('user', JSON.stringify(response.user));
-            navigate('/dashboard');
+            if(response){
+                navigate('/dashboard');
+                return;
+            }else{
+                setAlert({message: 'Ative seu e-mail para entrar..', severity: 'warning'});
+            }
         }catch(error){
-            console.log(error);
+            if(error.toString().indexOf('auth/invalid-credential') > -1){
+                setAlert({message: 'Credenciais inválidas.', severity: 'error'});
+            }else{
+                setAlert({message: error.toString(), severity: 'error'});
+            }
         }
+
+        setIsLoading(false);
     }
 
     useEffect(() => {
@@ -96,8 +109,35 @@ const Login = (props) => {
                             <Checkbox id="keep_logged" value="1" accessibilityLabel="Manter logado"></Checkbox>
                             <label for="keep_logged">Manter logado</label>
                         </Grid>
+                        {
+                            alert.message !== ''
+                            ?   <Grid item={true} xs={12} sx={{
+                                        '@media (max-width: 899px)': {
+                                            padding: '1em'
+                                        }
+                                }}>
+                                    <Alert severity={alert.severity}>{alert.message}</Alert>
+                                </Grid>
+                            : null
+                        }
                         <Grid item={true} xs={12}>
-                            <Button onPress={login}>Login</Button>
+                            <Button isLoading={isLoading} isLoadingText="Carregando..." disabled={isLoading} onPress={login}>Login</Button>
+                        </Grid>
+                        <Grid 
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                '@media (max-width: 899px)': {
+                                    padding: '1em'
+                                }
+                            }}
+                            item={true} xs={12}>
+                            <Link
+                                style={{
+                                    color: '#000',
+                                    textDecoration: 'none'
+                                }}
+                                to="/recovery-password">Esqueci minha senha</Link>
                         </Grid>
                     </Grid>
                 </Grid>
