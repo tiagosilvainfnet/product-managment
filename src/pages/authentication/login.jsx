@@ -12,6 +12,10 @@ const Login = (props) => {
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
+    useEffect(() => {
+        props.setRoute(window.location.pathname)
+    }, [])
+
     const login = async () => {
         setIsLoading(true);
         try{

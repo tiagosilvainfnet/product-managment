@@ -12,6 +12,10 @@ const RecoveryPassword = (props) => {
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
+    useEffect(() => {
+        props.setRoute(window.location.pathname)
+    }, [])
+
     const recoveryPassword = async () => {
         setIsLoading(true);
         try{
