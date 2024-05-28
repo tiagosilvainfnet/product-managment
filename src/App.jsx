@@ -3,6 +3,7 @@ import { NativeBaseProvider } from "native-base";
 import HomeIcon from '@mui/icons-material/Home';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import GroupIcon from '@mui/icons-material/Group';
+import Inventory2Icon from '@mui/icons-material/Inventory2';
 
 import {
   BrowserRouter as Router,
@@ -54,23 +55,28 @@ const App = () => {
               menus={[
                 {label: 'Painel', path: '/dashboard', icon: HomeIcon},
                 {label: 'Produtos', path: '/product', icon: AppRegistrationIcon},
+                {label: 'Estoque', path: '/stock', icon: Inventory2Icon},
                 {label: 'Usuários', path: '/user', icon: GroupIcon},
               ]}
               auth={auth} />
         }
-        <Suspense fallback={<Loading />}>
-          <Routes>
-            <Route path="/" element={<Dashboard setRoute={setRoute} app={app} auth={auth}/>} />
-            <Route path="/dashboard" element={<Dashboard setRoute={setRoute} app={app} auth={auth}/>} />
-            <Route path="/login" element={<Login setRoute={setRoute} app={app} auth={auth}/>} />
-            <Route path="/recovery-password" element={<RecoveryPassword setRoute={setRoute} app={app} auth={auth}/>} />
-            <Route path="/product" element={<ProductList setRoute={setRoute} app={app} auth={auth}/>} />
-            <Route path="/product/:id" element={<ProductForm setRoute={setRoute} app={app} auth={auth}/>} />
-            <Route path="/user" element={<UserList setRoute={setRoute} app={app} auth={auth}/>} />
-            <Route path="/user/:id" element={<UserForm setRoute={setRoute} app={app} auth={auth}/>} />
-            <Route path="/stock" element={<StockList setRoute={setRoute} app={app} auth={auth}/>} />
-          </Routes>
-        </Suspense>
+        <div style={{
+          marginTop: '50px',
+        }}>
+          <Suspense fallback={<Loading />}>
+            <Routes>
+              <Route path="/" element={<Dashboard setRoute={setRoute} app={app} auth={auth}/>} />
+              <Route path="/dashboard" element={<Dashboard setRoute={setRoute} app={app} auth={auth}/>} />
+              <Route path="/login" element={<Login setRoute={setRoute} app={app} auth={auth}/>} />
+              <Route path="/recovery-password" element={<RecoveryPassword setRoute={setRoute} app={app} auth={auth}/>} />
+              <Route path="/product" element={<ProductList setRoute={setRoute} app={app} auth={auth}/>} />
+              <Route path="/product/:id" element={<ProductForm setRoute={setRoute} app={app} auth={auth}/>} />
+              <Route path="/user" element={<UserList setRoute={setRoute} app={app} auth={auth}/>} />
+              <Route path="/user/:id" element={<UserForm setRoute={setRoute} app={app} auth={auth}/>} />
+              <Route path="/stock" element={<StockList setRoute={setRoute} app={app} auth={auth}/>} />
+            </Routes>
+          </Suspense>
+        </div>
       </Router>
     </NativeBaseProvider>
   );

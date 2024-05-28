@@ -7,3 +7,6 @@ export { default as Avatar } from './Avatar';
 export { default as Alert } from './Alert';
 export { default as Navigation } from './Navigation';
 export { default as IconButton } from './IconButton';
+export { default as SearchBar } from './SearchBar';
+export { default as Datagrid } from './Datagrid';
+export { default as Fab } from './Fab';

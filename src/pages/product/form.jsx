@@ -1,12 +1,14 @@
 import { useEffect } from "react";
 import { verifyLogin } from "../../utils/auth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const ProductForm = (props) => {
     const navigate = useNavigate();
+    const params = useParams();
 
     useEffect(() => {
         verifyLogin(navigate);
+        console.log(params.id);
     }, []);
 
     useEffect(() => {
