@@ -1,5 +1,5 @@
 export { default as Button } from './Button';
-export { default as Loading } from './Loading';
+export { default as Loading } from './Looading';
 export { default as Grid } from './Grid';
 export { default as Textfield } from './Textfield';
 export { default as Checkbox } from './Checkbox';
@@ -10,3 +10,4 @@ export { default as IconButton } from './IconButton';
 export { default as SearchBar } from './SearchBar';
 export { default as Datagrid } from './Datagrid';
 export { default as Fab } from './Fab';
+export { default as Dialog } from './Dialog';

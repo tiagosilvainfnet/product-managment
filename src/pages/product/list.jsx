@@ -1,50 +1,82 @@
 import { useEffect, useState } from "react";
 import { verifyLogin } from "../../utils/auth";
 import { useNavigate } from "react-router-dom";
-import { Datagrid, Fab, Grid, SearchBar } from "../../components";
+import { Alert, Datagrid, Dialog, Fab, Grid, SearchBar } from "../../components";
 import AddIcon from '@mui/icons-material/Add';
 import { GridActionsCellItem } from "@mui/x-data-grid";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
+import { deleteData, loadData } from "../../utils/database";
+import { AlertTitle } from "@mui/material";
 
 const ProductList = (props) => {
     const navigate = useNavigate();
+    const [dialogOpen, dialogSetOpen] = useState(false);
+    const [selectedRow, setSelectedRow] = useState(null);	
+    const [showAlert, setShowAlert] = useState(null);
 
     const edit = (id) => {
-        navigate(`/product/${id}`);
+        navigate(`/products/${id}`);
     }
 
-    const deleteRow = (id) => {
-        console.log(id);
+    const openDelete = (id) => {
+        dialogSetOpen(true);
+        setSelectedRow(id);
     }
+
+    const deleteRow = () => {
+        let alert = {}
+
+        try{
+            deleteData('products', selectedRow);
+            setSelectedRow(null);
+            load();
+            alert = {
+                title: "Sucesso",
+                message: "Produto excluído com sucesso"
+            }
+        }catch(err){
+            console.error(err);
+            alert = {
+                title: "Erro",
+                message: `Erro ao excluir produto {err}`
+            }
+        }
+
+        setShowAlert(alert);
+
+        setTimeout(() => {
+            setShowAlert(null);
+        }, 3000);
+    }
+
     const columns = [
         { field: 'id', headerName: 'ID', width: 90 },
         {
-            field: 'firstName',
-            headerName: 'First name',
+            field: 'name',
+            headerName: 'Nome',
             width: 150,
             editable: true,
         },
         {
-            field: 'lastName',
-            headerName: 'Last name',
+            field: 'price',
+            headerName: 'Preço',
             width: 150,
             editable: true,
         },
         {
-            field: 'age',
-            headerName: 'Age',
+            field: 'description',
+            headerName: 'Descrição',
             type: 'number',
             width: 110,
             editable: true,
         },
         {
-            field: 'fullName',
-            headerName: 'Full name',
-            description: 'This column has a value getter and is not sortable.',
-            sortable: false,
-            width: 160,
-            valueGetter: (value, row) => `${row.firstName || ''} ${row.lastName || ''}`,
+            field: 'quantity',
+            headerName: 'Quantidade',
+            type: 'number',
+            width: 110,
+            editable: true,
         },
         {
             field: 'actions',
@@ -62,25 +94,20 @@ const ProductList = (props) => {
                     <GridActionsCellItem
                         icon={<DeleteIcon />}
                         label="Delete"
-                        onClick={() => deleteRow(id)}
+                        onClick={() => openDelete(id)}
                     />
                 ];
             }
         }];
-    const [rows, setRows] = useState([
-                                    { id: 1, lastName: 'Snow', firstName: 'Jon', age: 14 },
-                                    { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 31 },
-                                    { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 31 },
-                                    { id: 4, lastName: 'Stark', firstName: 'Arya', age: 11 },
-                                    { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-                                    { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-                                    { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-                                    { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-                                    { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-                                    ]);
+    const [rows, setRows] = useState([]);
 
+    const load = async () => {  
+        const result = await loadData('products');
+        setRows(result);
+    }
     useEffect(() => {
         verifyLogin(navigate);
+        load();
     }, []);
 
     useEffect(() => {
@@ -88,6 +115,25 @@ const ProductList = (props) => {
     }, [])
 
     return  <>
+                {
+                    showAlert !== null ? 
+                    <div style={{
+                        position: "fixed",
+                        top: 15,
+                        right: 15,
+                    }}>
+                        <Alert severity="success">
+                            <AlertTitle>{showAlert.title}</AlertTitle>
+                            {showAlert.message}
+                        </Alert>
+                    </div> : null
+                }
+                <Dialog 
+                    onConfirm={deleteRow}
+                    title={"Confirmação"}
+                    text={"Deseja realmente excluir o produto?"}
+                    open={dialogOpen} 
+                    setOpen={dialogSetOpen}/>
                 <Grid container={true}>
                     <Grid item={true} xs={1}></Grid>
                     <Grid item={true} xs={10}>
@@ -105,7 +151,7 @@ const ProductList = (props) => {
                     <Grid item={true} xs={10}>
                         <Datagrid 
                             columns={columns}
-                            rows={rows}
+                            rows={rows ? rows : []}
                         />
                     </Grid>
                 </Grid>
@@ -115,7 +161,7 @@ const ProductList = (props) => {
                         right: '15px',
                         bottom: '15px'
                     }}
-                    onClick={() => navigate('/product/new')}
+                    onClick={() => navigate('/products/new')}
                     color="primary" aria-label="add">
                     <AddIcon />       
                 </Fab>
