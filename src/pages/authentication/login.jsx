@@ -96,14 +96,14 @@ const Login = (props) => {
                                     padding: '1em'
                                 }
                         }}>
-                            <Textfield placeholder="E-mail" value={email} type="email" onChange={(event) => {setEmail(event.target.value)}}/>
+                            <Textfield fullWidth={true} material={true} data-cy="e2e-email-field-login" placeholder="E-mail" value={email} type="email" onChange={(event) => {setEmail(event.target.value)}}/>
                         </Grid>
                         <Grid item={true} xs={12} sx={{
                                 '@media (max-width: 899px)': {
                                     padding: '1em'
                                 }
                         }}>
-                            <Textfield placeholder="Password" type="password" value={password} onChange={(event) => {setPassword(event.target.value)}}/>
+                            <Textfield fullWidth={true} material={true} data-cy="e2e-password-field-login" placeholder="Password" type="password" value={password} onChange={(event) => {setPassword(event.target.value)}}/>
                         </Grid>
                         <Grid item={true} xs={12} sx={{
                                 '@media (max-width: 899px)': {
@@ -120,11 +120,11 @@ const Login = (props) => {
                                             padding: '1em'
                                         }
                                 }}>
-                                    <Alert severity={alert.severity}>{alert.message}</Alert>
+                                    <Alert data-cy="e2e-alert-login" severity={alert.severity}>{alert.message}</Alert>
                                 </Grid>
                             : null
                         }
-                        <Grid item={true} xs={12}>
+                        <Grid data-cy="e2e-button-login" item={true} xs={12}>
                             <Button isLoading={isLoading} isLoadingText="Carregando..." disabled={isLoading} onPress={login}>Login</Button>
                         </Grid>
                         <Grid 

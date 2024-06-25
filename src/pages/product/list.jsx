@@ -162,7 +162,8 @@ const ProductList = (props) => {
                         bottom: '15px'
                     }}
                     onClick={() => navigate('/products/new')}
-                    color="primary" aria-label="add">
+                    color="primary" aria-label="add"
+                    data-cy="e2e-button-add-product">
                     <AddIcon />       
                 </Fab>
             </>    

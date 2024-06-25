@@ -37,7 +37,7 @@ const Navigation = (props) => {
         <List>
             {props.menus.map((menu, index) => (
             <ListItem key={`${menu.label}_${index}`} disablePadding>
-                <ListItemButton onClick={() => navigate(menu.path)}>
+                <ListItemButton data-cy={`e2e-menu-item-top-${index}`} onClick={() => navigate(menu.path)}>
                     <ListItemIcon>
                         <menu.icon />
                     </ListItemIcon>
@@ -53,7 +53,7 @@ const Navigation = (props) => {
                 {label: 'Sair', path: null, method: logout, icon: LogoutIcon},
             ].map((menu, index) => (
                 <ListItem key={`${menu.label}_${index}`} disablePadding>
-                    <ListItemButton onClick={menu.path === null ? () => menu.method() : () => navigate(menu.path)}>
+                    <ListItemButton data-cy={`e2e-menu-item-bottom-${index}`} onClick={menu.path === null ? () => menu.method() : () => navigate(menu.path)}>
                         <ListItemIcon>
                             <menu.icon />
                         </ListItemIcon>
@@ -67,6 +67,7 @@ const Navigation = (props) => {
 
     return  <div>
                 <Button
+                    data-cy="e2e-button-menu"
                     sx={{
                         height: '64px',
                         fontSize: '2em',

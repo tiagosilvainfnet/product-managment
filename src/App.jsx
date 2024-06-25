@@ -24,14 +24,24 @@ const UserForm = lazy(() => import("./pages/user/form"));
 const StockList = lazy(() => import("./pages/stock/list"));
 const Dashboard = lazy(() => import("./pages/dashboard/dashboard"));
 
+// const firebaseConfig = {
+//   apiKey: "AIzaSyC6xwnd-eyn3gf7V1CNgC7wyz4wfXdDtTI",
+//   authDomain: "project-managment-2024.firebaseapp.com",
+//   projectId: "project-managment-2024",
+//   storageBucket: "project-managment-2024.appspot.com",
+//   messagingSenderId: "646297068260",
+//   databaseURL: "https://project-managment-2024-default-rtdb.firebaseio.com",
+//   appId: "1:646297068260:web:d516632ddbc58ed62142f1"
+// };
+
 const firebaseConfig = {
-  apiKey: "AIzaSyC6xwnd-eyn3gf7V1CNgC7wyz4wfXdDtTI",
-  authDomain: "project-managment-2024.firebaseapp.com",
-  projectId: "project-managment-2024",
-  storageBucket: "project-managment-2024.appspot.com",
-  messagingSenderId: "646297068260",
-  databaseURL: "https://project-managment-2024-default-rtdb.firebaseio.com",
-  appId: "1:646297068260:web:d516632ddbc58ed62142f1"
+  apiKey: "AIzaSyDmGNWw3nBDu5X6sU9vU0wXJo-LU_9m32Y",
+  authDomain: "mobile-first-708ca.firebaseapp.com",
+  projectId: "mobile-first-708ca",
+  storageBucket: "mobile-first-708ca.appspot.com",
+  messagingSenderId: "195492127813",
+  databaseURL: "https://mobile-first-708ca-default-rtdb.firebaseio.com",
+  appId: "1:195492127813:web:b470cfdd4e7aba3a8b2f2c"
 };
 
 const App = () => {

@@ -52,7 +52,7 @@ const ProductForm = (props) => {
         setTimeout(() => {
             setShowAlert(null);
             navigate("/products");
-        }, 3000);
+        }, 5000);
     }
 
     return  <Grid container spacing={2}>
@@ -63,7 +63,7 @@ const ProductForm = (props) => {
                         top: 15,
                         right: 15,
                     }}>
-                        <Alert severity="success">
+                        <Alert data-cy="e2e-alert-product-add" severity="success">
                             <AlertTitle>{showAlert.title}</AlertTitle>
                             {showAlert.message}
                         </Alert>
@@ -81,6 +81,7 @@ const ProductForm = (props) => {
                                 onChange={(e) => setData({ ...data, name: e.target.value })}
                                 fullWidth={true}
                                 material={true}
+                                data-cy="e2e-product-name"
                                 label="Nome" />
                         </Grid>
                         <Grid item={true} xs={12}>
@@ -91,6 +92,7 @@ const ProductForm = (props) => {
                                 material={true}
                                 multiline={true}
                                 rows={4}
+                                data-cy="e2e-product-description"
                                 label="Descrição" />
                         </Grid>
                         <Grid item={true} xs={12}>
@@ -100,6 +102,7 @@ const ProductForm = (props) => {
                                 fullWidth={true}
                                 material={true}
                                 type="number"
+                                data-cy="e2e-product-price"
                                 label="Preço" />
                         </Grid>
                         <Grid item={true} xs={12}>
@@ -108,9 +111,10 @@ const ProductForm = (props) => {
                                 onChange={(e) => setData({ ...data, quantity: e.target.value })}
                                 fullWidth={true}
                                 material={true}
+                                data-cy="e2e-product-quantity"
                                 label="Quantidade" />
                         </Grid>
-                        <Grid item={true} xs={12}>
+                        <Grid data-cy="e2e-button-product-add" item={true} xs={12}>
                             <Button onPress={save}>{params.id === "new" ? "Salvar" : "Editar"}</Button>
                         </Grid>
                     </Grid>
